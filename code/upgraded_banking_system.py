@@ -14,6 +14,7 @@ def menu():
     => """
     return input(textwrap.dedent(menu))
 
+
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
@@ -23,6 +24,7 @@ def depositar(saldo, valor, extrato, /):
         print("\n### Operação falhou. O valor informado é inválido. ###")
     
     return saldo, extrato
+
 
 def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     excedeu_saldo = valor > saldo
@@ -40,7 +42,7 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
 
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque: \t\tR$ {valor:.2f}\n"
+        extrato += f"Saque:\t\tR$ {valor:.2f}\n"
         numero_saques += 1
         print("\n### Saque realizado com sucesso! ###")
     
@@ -49,11 +51,13 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     
     return saldo, extrato
 
+
 def exibir_extrato(saldo, /, *, extrato):
     print("\n########### EXTRATO ###########")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo:\t\tR$ {saldo:.2f}")
     print("\n###############################")
+
 
 def criar_usuario(usuarios):
     cpf = input("Por favor, informe o CPF (somente números): ")
@@ -71,9 +75,11 @@ def criar_usuario(usuarios):
 
     print("### Usuário criado com sucesso! ###")
 
+
 def filtrar_usuario(cpf, usuarios):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
+
 
 def criar_conta(agencia, numero_conta, usuarios):
     cpf = input("Por favor, informe o CPF do usuário(somente números): ")
@@ -85,15 +91,17 @@ def criar_conta(agencia, numero_conta, usuarios):
     
     print("\n### Usuário não encontrado, processo de criação de conta encerrada! ###")
 
+
 def listar_contas(contas):
     for conta in contas:
         linha = f"""\
             Agência:\t{conta['agencia']}
             C/C:\t\t{conta['numero_conta']}
-            Titular: \t{conta['usuario']['nome']}
+            Titular:\t{conta['usuario']['nome']}
         """
         print("=" * 100)
         print(textwrap.dedent(linha))
+
 
 def main():
     LIMITE_SAQUES = 3
@@ -129,9 +137,6 @@ def main():
         elif opcao == "3":
             exibir_extrato(saldo, extrato=extrato)
 
-        elif opcao == "6":
-            criar_usuario(usuarios)
-
         elif opcao == "4":
             numero_conta = len(contas) + 1
             conta = criar_conta(AGENCIA, numero_conta, usuarios)
@@ -141,11 +146,15 @@ def main():
 
         elif opcao == "5":
             listar_contas(contas)
+        
+        elif opcao == "6":
+            criar_usuario(usuarios)
 
         elif opcao == "0":
             break
 
         else:
             print("Erro! Operação inválida, por favor selecione novamente.")
+
 
 main()
